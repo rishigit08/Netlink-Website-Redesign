@@ -24,15 +24,15 @@ export default function Navbar() {
     <header
       className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "border-b border-slate-800/80 bg-[#0b1120]/90 shadow-lg shadow-black/20 backdrop-blur-xl"
+          ? "border-b border-slate-800/80 bg-[#0b1120]/95 shadow-lg shadow-black/20 backdrop-blur-xl"
           : "bg-[#0b1120]/95 backdrop-blur-sm"
       }`}
     >
       <nav
-        className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3 lg:px-8"
+        className="mx-auto flex max-w-[1320px] items-center justify-between px-6 py-3 md:px-10 lg:px-16"
         aria-label="Main navigation"
       >
-        {/* ── Left: Logo + GPTW badge ── */}
+        {/* ── Left: Logo ── */}
         <div className="flex items-center gap-3">
           <a href="#" className="flex items-center" aria-label="Netlink home">
             <img
@@ -101,27 +101,11 @@ export default function Navbar() {
           aria-expanded={mobileOpen}
         >
           {mobileOpen ? (
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-            >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M18 6L6 18M6 6l12 12" />
             </svg>
           ) : (
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-            >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M3 12h18M3 6h18M3 18h18" />
             </svg>
           )}
@@ -148,7 +132,7 @@ export default function Navbar() {
               {item.label}
               {item.hasDropdown && (
                 <svg
-                  className="h-4 w-4 text-slate-500"
+                  className="h-4 w-4 text-slate-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -169,18 +153,8 @@ export default function Navbar() {
             className="mt-6 flex items-center justify-center gap-2 rounded-[10px] bg-blue-600 px-5 py-3.5 text-base font-semibold text-white transition-colors hover:bg-blue-500"
           >
             Let&apos;s Talk
-            <svg
-              className="h-4 w-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2.5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 5l7 7-7 7"
-              />
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </a>
         </nav>

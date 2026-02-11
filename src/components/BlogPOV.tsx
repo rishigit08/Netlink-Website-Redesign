@@ -14,30 +14,30 @@ export default function BlogPOV() {
           {blogTeasers.map((post) => (
             <article
               key={post.title}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 transition-all duration-300 hover:border-slate-700 hover:bg-slate-900/80 hover:shadow-lg hover:shadow-black/20"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-200/50"
             >
               {/* Image placeholder */}
               <div
-                className="h-48 bg-gradient-to-br from-slate-800 via-slate-800/80 to-blue-950/40"
+                className="h-48 bg-gradient-to-br from-slate-100 via-slate-50 to-blue-50"
                 aria-label="Article illustration"
               />
 
               <div className="flex flex-1 flex-col p-6 sm:p-7">
-                <p className="mb-3 text-xs font-semibold tracking-widest text-blue-400 uppercase">
+                <p className="mb-3 text-xs font-semibold tracking-widest text-blue-600 uppercase">
                   Insight
                 </p>
 
-                <h3 className="text-lg font-semibold leading-snug text-white">
+                <h3 className="text-lg font-semibold leading-snug text-slate-900">
                   {post.title}
                 </h3>
 
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-400">
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-500">
                   {post.description}
                 </p>
 
                 <a
                   href="#"
-                  className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-400 transition-colors hover:text-blue-300"
+                  className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700"
                 >
                   Read more
                   <svg

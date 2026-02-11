@@ -5,9 +5,9 @@ export default function CaseStudies() {
   return (
     <section
       id="case-studies"
-      className="py-20 lg:py-28"
+      className="pt-10 pb-20 lg:pt-12 lg:pb-28"
       style={{
-        background: "linear-gradient(180deg, #07090f 0%, #0a0e17 100%)",
+        background: "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)",
       }}
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
