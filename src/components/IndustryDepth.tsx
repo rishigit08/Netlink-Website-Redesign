@@ -215,27 +215,28 @@ export default function IndustryDepth() {
 
   return (
     <section id="industries" className="py-20 lg:py-28">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-6 lg:mb-4 lg:px-8 [&>div]:mb-6 [&>div]:md:mb-8">
         <SectionHeading
           heading="From Concept to Cognitive Value"
           subtext="Solutions designed to work independently, built to work together"
         />
+      </div>
 
-        {/* ── Desktop: Tab bar + content ── */}
-        <div className="hidden lg:block">
+      {/* ── Desktop: Tab bar + content ── */}
+      <div className="hidden border-y border-slate-200 bg-gradient-to-br from-blue-100/70 via-blue-50/40 to-indigo-100/50 px-[100px] py-[60px] lg:block">
           <div className="mb-10 flex flex-wrap items-center justify-center gap-3">
             {industries.map((ind) => (
               <button
                 key={ind.id}
                 onClick={() => !ind.comingSoon && setActiveTab(ind.id)}
                 disabled={ind.comingSoon}
-                className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 ${
-                  activeTab === ind.id
-                    ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
-                    : ind.comingSoon
-                      ? "cursor-default bg-slate-100 text-slate-300"
-                      : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-800"
-                }`}
+              className={`rounded-full border px-5 py-2.5 text-sm font-medium transition-all duration-300 ${
+                activeTab === ind.id
+                  ? "border-blue-600 bg-blue-600 text-white shadow-md shadow-blue-600/20"
+                  : ind.comingSoon
+                    ? "cursor-default border-slate-200 bg-transparent text-slate-300"
+                    : "border-slate-300 bg-transparent text-slate-600 hover:border-slate-400 hover:text-slate-800"
+              }`}
               >
                 {ind.name}
                 {ind.comingSoon && (
@@ -247,7 +248,7 @@ export default function IndustryDepth() {
 
           {activeIndustry && !activeIndustry.comingSoon && (
             <>
-              <p className="mx-auto mb-12 max-w-3xl text-center text-lg leading-relaxed text-slate-500">
+              <p className="mx-auto mb-12 max-w-3xl text-center text-lg font-medium leading-relaxed text-slate-500">
                 {activeIndustry.tagline}
               </p>
 
@@ -260,21 +261,21 @@ export default function IndustryDepth() {
               </div>
 
               {/* Right — Solutions list */}
-              <div className="grid grid-cols-2 gap-x-8" role="list">
-                {(() => {
-                  const mid = Math.min(10, Math.ceil(activeIndustry.solutions.length / 2));
-                  const col1 = activeIndustry.solutions.slice(0, mid);
-                  const col2 = activeIndustry.solutions.slice(mid);
-                  return (
-                    <>
-                      <ul className="divide-y divide-slate-200">
-                        {col1.map((solution) => (
-                          <li key={solution} className="flex items-start gap-3 py-3 text-sm leading-relaxed text-slate-600">
-                            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500" aria-hidden="true" />
-                            {solution}
-                          </li>
-                        ))}
-                      </ul>
+              {(() => {
+                const needsTwoCols = activeIndustry.solutions.length > 8;
+                const col1 = needsTwoCols ? activeIndustry.solutions.slice(0, 8) : activeIndustry.solutions;
+                const col2 = needsTwoCols ? activeIndustry.solutions.slice(8) : [];
+                return (
+                  <div className={needsTwoCols ? "grid grid-cols-2 gap-x-8" : ""} role="list">
+                    <ul className="divide-y divide-slate-200">
+                      {col1.map((solution) => (
+                        <li key={solution} className="flex items-start gap-3 py-3 text-sm leading-relaxed text-slate-600">
+                          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500" aria-hidden="true" />
+                          {solution}
+                        </li>
+                      ))}
+                    </ul>
+                    {col2.length > 0 && (
                       <ul className="divide-y divide-slate-200">
                         {col2.map((solution) => (
                           <li key={solution} className="flex items-start gap-3 py-3 text-sm leading-relaxed text-slate-600">
@@ -283,18 +284,18 @@ export default function IndustryDepth() {
                           </li>
                         ))}
                       </ul>
-                    </>
-                  );
-                })()}
-              </div>
+                    )}
+                  </div>
+                );
+              })()}
             </div>
             </>
           )}
-        </div>
+      </div>
 
-        {/* ── Mobile: Accordion ── */}
-        <div className="space-y-3 lg:hidden">
-          {industries.map((ind) => {
+      {/* ── Mobile: Accordion ── */}
+      <div className="mx-auto max-w-7xl space-y-3 px-6 lg:hidden lg:px-8">
+        {industries.map((ind) => {
             const isOpen = openAccordion === ind.id;
             return (
               <div
@@ -367,7 +368,6 @@ export default function IndustryDepth() {
               </div>
             );
           })}
-        </div>
       </div>
     </section>
   );

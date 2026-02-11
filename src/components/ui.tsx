@@ -151,32 +151,15 @@ export function CTA({
 // ============================================================
 
 /* Themed illustration icons per industry */
-const caseStudyIllustrations: Record<string, { bg: string; icon: React.ReactNode }> = {
+const caseStudyIllustrations: Record<string, { bg: string; image?: string; icon: React.ReactNode }> = {
   Healthcare: {
-    bg: "from-blue-50 via-blue-100/60 to-indigo-50",
-    icon: (
-      <div className="flex items-center gap-4">
-        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-md shadow-blue-200/40">
-          <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7 text-blue-600" stroke="currentColor" strokeWidth="1.5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-6-6h12" />
-            <rect x="3" y="3" width="18" height="18" rx="4" />
-          </svg>
-        </div>
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 shadow-md shadow-blue-600/25">
-          <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5 text-white" stroke="currentColor" strokeWidth="1.5">
-            <path strokeLinecap="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-        </div>
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-md shadow-blue-100/40">
-          <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 text-blue-400" stroke="currentColor" strokeWidth="1.5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-          </svg>
-        </div>
-      </div>
-    ),
+    bg: "",
+    image: "/case-healthcare.png",
+    icon: null,
   },
   Insurance: {
-    bg: "from-indigo-50 via-violet-100/60 to-purple-50",
+    bg: "",
+    image: "/case-insurance.png",
     icon: (
       <div className="flex items-center gap-4">
         <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-md shadow-indigo-200/40">
@@ -200,7 +183,8 @@ const caseStudyIllustrations: Record<string, { bg: string; icon: React.ReactNode
     ),
   },
   "Supply Chain": {
-    bg: "from-cyan-50 via-sky-100/60 to-blue-50",
+    bg: "",
+    image: "/case-supplychain.png",
     icon: (
       <div className="flex items-center gap-4">
         <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-md shadow-cyan-200/40">
@@ -228,7 +212,7 @@ function getCaseIllustration(tags: string[]) {
     const match = caseStudyIllustrations[tag];
     if (match) return match;
   }
-  return { bg: "from-slate-50 via-slate-100/60 to-blue-50", icon: null };
+  return { bg: "from-slate-50 via-slate-100/60 to-blue-50", image: undefined, icon: null };
 }
 
 interface CaseStudyCardProps {
@@ -249,20 +233,21 @@ export function CaseStudyCard({
   return (
     <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-200/50">
       {/* Illustration header */}
-      <div className={`flex h-44 items-center justify-center bg-gradient-to-br ${illust.bg}`}>
-        {illust.icon}
-      </div>
+      {illust.image ? (
+        <div className="h-44 overflow-hidden">
+          <img src={illust.image} alt="" className="h-full w-full object-cover" />
+        </div>
+      ) : (
+        <div className={`flex h-44 items-center justify-center bg-gradient-to-br ${illust.bg}`}>
+          {illust.icon}
+        </div>
+      )}
 
       <div className="flex flex-1 flex-col p-6 sm:p-8">
-        {/* Client logo placeholder */}
-        <div
-          className="mb-4 flex h-8 w-20 items-center justify-center rounded-md bg-gradient-to-br from-slate-100 to-slate-200"
-          aria-label={`${client} logo`}
-        >
-          <span className="text-[10px] font-bold tracking-wider text-slate-500 uppercase">
-            {client}
-          </span>
-        </div>
+        {/* Client pill */}
+        <span className="mb-4 inline-flex w-fit items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold tracking-wide text-slate-600 uppercase">
+          {client}
+        </span>
 
         <h3 className="text-lg font-semibold leading-snug text-slate-900 sm:text-xl">
           {title}

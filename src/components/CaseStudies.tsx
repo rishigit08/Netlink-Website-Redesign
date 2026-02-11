@@ -5,10 +5,7 @@ export default function CaseStudies() {
   return (
     <section
       id="case-studies"
-      className="pt-10 pb-20 lg:pt-12 lg:pb-28"
-      style={{
-        background: "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)",
-      }}
+      className="bg-white pt-10 pb-20 lg:pt-12 lg:pb-28"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <SectionHeading
