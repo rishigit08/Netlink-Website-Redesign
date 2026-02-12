@@ -124,7 +124,7 @@ export default function ConnectedEnterprise() {
   return (
     <section
       id="connected-enterprise"
-      className="relative pt-20 pb-14 lg:pt-20 lg:pb-16 bg-[#f9fafb]"
+      className="relative bg-white pt-20 pb-14 lg:pt-20 lg:pb-16"
     >
       <div className="bg-dot-pattern absolute inset-0 opacity-[0.015]" />
 

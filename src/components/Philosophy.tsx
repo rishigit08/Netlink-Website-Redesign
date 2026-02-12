@@ -2,7 +2,7 @@ import { CTA } from "@/components/ui";
 
 export default function Philosophy() {
   return (
-    <section id="philosophy" className="py-12 lg:py-16">
+    <section id="philosophy" className="py-8 lg:py-11">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* ── POV Statement ── */}
         <div className="text-center">

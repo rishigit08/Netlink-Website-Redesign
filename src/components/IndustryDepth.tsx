@@ -223,7 +223,7 @@ export default function IndustryDepth() {
       </div>
 
       {/* ── Desktop: Tab bar + content ── */}
-      <div className="hidden border-y border-slate-200 bg-gradient-to-br from-blue-100/70 via-blue-50/40 to-indigo-100/50 px-[100px] py-[60px] lg:block">
+      <div className="hidden bg-gradient-to-br from-blue-100/70 via-blue-50/40 to-indigo-100/50 px-[100px] py-[60px] lg:block">
           <div className="mb-10 flex flex-wrap items-center justify-center gap-3">
             {industries.map((ind) => (
               <button

@@ -88,6 +88,16 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+@keyframes ce-img-hover {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
 @keyframes spin-slow {
   from {
     transform: rotate(0deg);
@@ -113,8 +123,32 @@ h1, h2, h3, h4, h5, h6 {
   animation: spin-slow 20s linear infinite;
 }
 
+.ce-img-float {
+  animation: ce-img-hover 6s ease-in-out infinite;
+}
+
 /* ── Dot grid pattern ── */
 .bg-dot-pattern {
   background-image: radial-gradient(circle, #94a3b8 0.5px, transparent 0.5px);
   background-size: 24px 24px;
+}
+
+/* ── Connector flow animation ── */
+@keyframes connector-flow {
+  0% {
+    stroke-dashoffset: 12;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.connector-path {
+  animation: connector-flow 1.5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .connector-path {
+    animation: none;
+  }
 }
