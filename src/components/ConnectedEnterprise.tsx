@@ -16,28 +16,10 @@ interface LayerDef {
    ═══════════════════════════════════════════════════════════════ */
 const STACK: LayerDef[] = [
   {
-    id: "infrastructure",
-    title: "Infrastructure & Cloud",
+    id: "automation",
+    title: "Automation & Orchestration",
     description:
-      "When demand shifts, system is able to absorb AI scale without breaking performance",
-  },
-  {
-    id: "security",
-    title: "Security & Governance",
-    description:
-      "Security-driven governance to keep intelligent systems scalable and safe",
-  },
-  {
-    id: "data",
-    title: "Data & Intelligence",
-    description:
-      "Data unified across enterprise systems enables intelligence that keeps operations efficient and adaptive.",
-  },
-  {
-    id: "erp",
-    title: "ERP & Core Platforms",
-    description:
-      "Decisions move when intelligence is part of core systems. Netlink embeds it where execution happens.",
+      "Netlink builds context-aware automation that adapts as conditions change",
   },
   {
     id: "applications",
@@ -46,10 +28,28 @@ const STACK: LayerDef[] = [
       "Enabling faster product scale by embedding intelligence into deeply integrated tools and workflows from the start",
   },
   {
-    id: "automation",
-    title: "Automation & Orchestration",
+    id: "erp",
+    title: "ERP & Core Platforms",
     description:
-      "Netlink builds context-aware automation that adapts as conditions change",
+      "Decisions move when intelligence is part of core systems. Netlink embeds it where execution happens.",
+  },
+  {
+    id: "data",
+    title: "Data & Intelligence",
+    description:
+      "Data unified across enterprise systems enables intelligence that keeps operations efficient and adaptive.",
+  },
+  {
+    id: "security",
+    title: "Security & Governance",
+    description:
+      "Security-driven governance to keep intelligent systems scalable and safe",
+  },
+  {
+    id: "infrastructure",
+    title: "Infrastructure & Cloud",
+    description:
+      "When demand shifts, system is able to absorb AI scale without breaking performance",
   },
 ];
 
