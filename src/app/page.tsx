@@ -3,7 +3,7 @@ import Hero, { HeroStats } from "@/components/Hero";
 import ConnectedEnterprise from "@/components/ConnectedEnterprise";
 import IndustryDepth from "@/components/IndustryDepth";
 import CaseStudies from "@/components/CaseStudies";
-import Philosophy from "@/components/Philosophy";
+import Philosophy, { PartnershipCTA } from "@/components/Philosophy";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -12,11 +12,12 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <HeroStats />
         <ConnectedEnterprise />
         <IndustryDepth />
         <CaseStudies />
         <Philosophy />
+        <HeroStats />
+        <PartnershipCTA />
       </main>
       <Footer />
     </>

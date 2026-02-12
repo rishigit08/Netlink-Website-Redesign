@@ -124,105 +124,229 @@ export default function ConnectedEnterprise() {
   return (
     <section
       id="connected-enterprise"
-      className="relative py-24 lg:py-28 bg-[#f9fafb]"
+      className="relative pt-20 pb-14 lg:pt-20 lg:pb-16 bg-[#f9fafb]"
     >
       <div className="bg-dot-pattern absolute inset-0 opacity-[0.015]" />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
 
-        <div className="mx-auto mb-16 max-w-4xl text-center">
+        <div className="mx-auto mb-1 max-w-4xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
             Inside the Connected Enterprise
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-slate-500">
+          <p className="mt-2 text-lg leading-relaxed text-slate-500">
             Bringing data, platforms, and processes together, architected with
             AI at the core
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 items-start gap-16 lg:grid-cols-2">
+        {/* Desktop: 3-column layout (left items | illustration | right items) */}
+        <div className="mt-2 hidden items-center gap-6 lg:grid lg:grid-cols-[1fr_auto_1fr]">
 
-          {/* Left column — expertise list */}
-          <div className="order-2 w-full max-w-xl lg:order-1">
-            <div className="flex flex-col gap-2">
-              {STACK.map((layer) => {
-                const isActive = activeId === layer.id;
-                return (
-                  <button
-                    key={layer.id}
-                    type="button"
-                    className={`group flex w-full items-center gap-4 rounded-xl border px-5 py-4 text-left transition-all duration-500 ease-in-out ${
+          {/* Left column — first 3 items */}
+          <div className="flex flex-col gap-[60px]">
+            {STACK.slice(0, 3).map((layer) => {
+              const isActive = activeId === layer.id;
+              return (
+                <button
+                  key={layer.id}
+                  type="button"
+                  className={`group flex w-full items-center gap-4 rounded-xl border px-5 py-4 text-left transition-all duration-500 ease-in-out ${
+                    isActive
+                      ? "border-blue-200 bg-blue-50 shadow-sm shadow-blue-100/50"
+                      : hasActive
+                        ? "border-slate-200/60 bg-white/80 opacity-70"
+                        : "border-slate-200 bg-white shadow-sm shadow-slate-100/50 hover:border-blue-200 hover:bg-blue-50 hover:shadow-md hover:shadow-blue-100/50"
+                  }`}
+                  onClick={() => handleSelect(layer.id)}
+                  onMouseEnter={() => handleHover(layer.id)}
+                  onMouseLeave={() => handleHover(null)}
+                  aria-pressed={isActive}
+                >
+                  <div
+                    className={`shrink-0 rounded-lg p-2 transition-colors duration-300 ${
                       isActive
-                        ? "border-blue-200 bg-blue-50"
-                        : hasActive
-                          ? "border-slate-200/60 bg-slate-50/60 opacity-70"
-                          : "border-slate-200 bg-slate-50/60 hover:border-blue-200 hover:bg-blue-50"
+                        ? "bg-blue-100 text-blue-600"
+                        : "bg-slate-200/70 text-slate-500 group-hover:bg-blue-100 group-hover:text-blue-600"
                     }`}
-                    onClick={() => handleSelect(layer.id)}
-                    onMouseEnter={() => handleHover(layer.id)}
-                    onMouseLeave={() => handleHover(null)}
-                    aria-pressed={isActive}
                   >
-                    <div
-                      className={`shrink-0 rounded-lg p-2 transition-colors duration-300 ${
-                        isActive
-                          ? "bg-blue-100 text-blue-600"
-                          : "bg-slate-200/70 text-slate-500 group-hover:bg-blue-100 group-hover:text-blue-600"
+                    {icons[layer.id]}
+                  </div>
+                  <div className="min-w-0">
+                    <h3
+                      className={`text-sm font-semibold transition-colors duration-300 ${
+                        isActive ? "text-slate-900" : "text-slate-700 group-hover:text-slate-900"
                       }`}
                     >
-                      {icons[layer.id]}
-                    </div>
-                    <div className="min-w-0">
-                      <h3
-                        className={`text-sm font-semibold transition-colors duration-300 ${
-                          isActive ? "text-slate-900" : "text-slate-700 group-hover:text-slate-900"
-                        }`}
-                      >
-                        {layer.title}
-                      </h3>
-                      <div
-                        className={`grid transition-all duration-500 ease-in-out ${
-                          isActive
-                            ? "grid-rows-[1fr] opacity-100"
-                            : "grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100"
-                        }`}
-                      >
-                        <div className="overflow-hidden">
-                          <p className={`mt-1.5 text-xs leading-relaxed transition-colors duration-500 ${
-                            isActive ? "text-slate-600" : "text-slate-400 group-hover:text-slate-600"
-                          }`}>
-                            {layer.description}
-                          </p>
-                        </div>
+                      {layer.title}
+                    </h3>
+                    <div
+                      className={`grid transition-all duration-500 ease-in-out ${
+                        isActive
+                          ? "grid-rows-[1fr] opacity-100"
+                          : "grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100"
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <p className={`mt-1.5 text-xs leading-relaxed transition-colors duration-500 ${
+                          isActive ? "text-slate-600" : "text-slate-400 group-hover:text-slate-600"
+                        }`}>
+                          {layer.description}
+                        </p>
                       </div>
                     </div>
-                    
-                  </button>
-                );
-              })}
-            </div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
 
-          {/* Right column — illustration */}
-          <div className="order-1 lg:order-2">
-            <div
-              className="relative ml-auto flex w-full max-w-xl items-center justify-center"
-              style={{ height: 520 }}
-            >
-              {/* Blue aura behind illustration */}
-              <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">
-                <div className="h-3/4 w-3/4 rounded-full bg-blue-400/[0.10] blur-[80px]" />
-              </div>
-              {/* Static illustration image with hover float */}
-              <img
-                src="/connected-enterprise-stack.png"
-                alt="Connected Enterprise — stacked technology layers representing Infrastructure, Security, Data, ERP, Applications, and Automation"
-                className="ce-img-float relative z-[1] h-full w-auto max-w-full object-contain"
-                draggable={false}
-              />
+          {/* Center — illustration */}
+          <div
+            className="relative flex items-center justify-center"
+            style={{ height: 811, width: 624 }}
+          >
+            <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">
+              <div className="h-3/4 w-3/4 rounded-full bg-blue-400/[0.10] blur-[80px]" />
             </div>
+            <img
+              src="/connected-enterprise-stack.png"
+              alt="Connected Enterprise — stacked technology layers"
+              className="ce-img-float relative z-[1] h-full w-auto max-w-full object-contain"
+              draggable={false}
+            />
           </div>
 
+          {/* Right column — last 3 items */}
+          <div className="flex flex-col gap-[60px]">
+            {STACK.slice(3).map((layer) => {
+              const isActive = activeId === layer.id;
+              return (
+                <button
+                  key={layer.id}
+                  type="button"
+                  className={`group flex w-full items-center gap-4 rounded-xl border px-5 py-4 text-left transition-all duration-500 ease-in-out ${
+                    isActive
+                      ? "border-blue-200 bg-blue-50 shadow-sm shadow-blue-100/50"
+                      : hasActive
+                        ? "border-slate-200/60 bg-white/80 opacity-70"
+                        : "border-slate-200 bg-white shadow-sm shadow-slate-100/50 hover:border-blue-200 hover:bg-blue-50 hover:shadow-md hover:shadow-blue-100/50"
+                  }`}
+                  onClick={() => handleSelect(layer.id)}
+                  onMouseEnter={() => handleHover(layer.id)}
+                  onMouseLeave={() => handleHover(null)}
+                  aria-pressed={isActive}
+                >
+                  <div
+                    className={`shrink-0 rounded-lg p-2 transition-colors duration-300 ${
+                      isActive
+                        ? "bg-blue-100 text-blue-600"
+                        : "bg-slate-200/70 text-slate-500 group-hover:bg-blue-100 group-hover:text-blue-600"
+                    }`}
+                  >
+                    {icons[layer.id]}
+                  </div>
+                  <div className="min-w-0">
+                    <h3
+                      className={`text-sm font-semibold transition-colors duration-300 ${
+                        isActive ? "text-slate-900" : "text-slate-700 group-hover:text-slate-900"
+                      }`}
+                    >
+                      {layer.title}
+                    </h3>
+                    <div
+                      className={`grid transition-all duration-500 ease-in-out ${
+                        isActive
+                          ? "grid-rows-[1fr] opacity-100"
+                          : "grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100"
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <p className={`mt-1.5 text-xs leading-relaxed transition-colors duration-500 ${
+                          isActive ? "text-slate-600" : "text-slate-400 group-hover:text-slate-600"
+                        }`}>
+                          {layer.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+        </div>
+
+        {/* Mobile: stacked layout (illustration on top, all items below) */}
+        <div className="mt-12 flex flex-col items-center gap-10 lg:hidden">
+          <div
+            className="relative flex w-full max-w-sm items-center justify-center"
+            style={{ height: 360 }}
+          >
+            <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">
+              <div className="h-3/4 w-3/4 rounded-full bg-blue-400/[0.10] blur-[80px]" />
+            </div>
+            <img
+              src="/connected-enterprise-stack.png"
+              alt="Connected Enterprise — stacked technology layers"
+              className="ce-img-float relative z-[1] h-full w-auto max-w-full object-contain"
+              draggable={false}
+            />
+          </div>
+          <div className="flex w-full flex-col gap-4">
+            {STACK.map((layer) => {
+              const isActive = activeId === layer.id;
+              return (
+                <button
+                  key={layer.id}
+                  type="button"
+                  className={`group flex w-full items-center gap-4 rounded-xl border px-5 py-4 text-left transition-all duration-500 ease-in-out ${
+                    isActive
+                      ? "border-blue-200 bg-blue-50 shadow-sm shadow-blue-100/50"
+                      : hasActive
+                        ? "border-slate-200/60 bg-white/80 opacity-70"
+                        : "border-slate-200 bg-white shadow-sm shadow-slate-100/50 hover:border-blue-200 hover:bg-blue-50 hover:shadow-md hover:shadow-blue-100/50"
+                  }`}
+                  onClick={() => handleSelect(layer.id)}
+                  aria-pressed={isActive}
+                >
+                  <div
+                    className={`shrink-0 rounded-lg p-2 transition-colors duration-300 ${
+                      isActive
+                        ? "bg-blue-100 text-blue-600"
+                        : "bg-slate-200/70 text-slate-500 group-hover:bg-blue-100 group-hover:text-blue-600"
+                    }`}
+                  >
+                    {icons[layer.id]}
+                  </div>
+                  <div className="min-w-0">
+                    <h3
+                      className={`text-sm font-semibold transition-colors duration-300 ${
+                        isActive ? "text-slate-900" : "text-slate-700 group-hover:text-slate-900"
+                      }`}
+                    >
+                      {layer.title}
+                    </h3>
+                    <div
+                      className={`grid transition-all duration-500 ease-in-out ${
+                        isActive
+                          ? "grid-rows-[1fr] opacity-100"
+                          : "grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100"
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <p className={`mt-1.5 text-xs leading-relaxed transition-colors duration-500 ${
+                          isActive ? "text-slate-600" : "text-slate-400 group-hover:text-slate-600"
+                        }`}>
+                          {layer.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 

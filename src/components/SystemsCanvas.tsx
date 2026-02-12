@@ -12,16 +12,16 @@ const ROT_SPEED = 0.001;
 const MAX_DPR = 2;
 const CONN_DIST = 0.58; // fraction of R — increased for denser connections
 
-// Assembly
-const PLACED_RATIO = 0.3;
-const ARRIVE_INTERVAL = 12;
-const ARRIVE_DUR_MIN = 70;
-const ARRIVE_DUR_MAX = 130;
-const FIRST_ARRIVE = 20;
+// Assembly — all nodes arrive together from all directions
+const PLACED_RATIO = 0;
+const ARRIVE_INTERVAL = 0;
+const ARRIVE_DUR_MIN = 180;
+const ARRIVE_DUR_MAX = 280;
+const FIRST_ARRIVE = 10;
 
 // Connections phase — only appear after most nodes are placed
 const CONN_START_RATIO = 0.85; // connections begin fading in at 85% placed
-const CONN_FADE_FRAMES = 120;  // frames to fully fade connections in
+const CONN_FADE_FRAMES = 90;   // frames to fully fade connections in
 
 // Hover repel
 const REPEL_RADIUS = 120; // px screen distance
@@ -38,8 +38,8 @@ const CORE_COL: [number, number, number] = [55, 155, 255];   // central glow
 const SPEC_COL: [number, number, number] = [160, 210, 255];  // specular highlight
 
 // Pulse
-const PULSE_INTERVAL = 90; // frames between new pulses
-const PULSE_SPEED = 0.015;
+const PULSE_INTERVAL = 45; // frames between new pulses
+const PULSE_SPEED = 0.025;
 
 /* ═══════════════════════════════════════════════════════════════
    Types
@@ -83,29 +83,29 @@ function fibSphere(n: number, R: number): [number, number, number][] {
 
 function makeNodes(R: number, cw: number, ch: number): Node[] {
   const targets = fibSphere(NODE_COUNT, R);
-  const sorted = targets
-    .map((t, i) => ({ t, i }))
-    .sort((a, b) => a.t[1] - b.t[1]);
-  const placedN = Math.floor(NODE_COUNT * PLACED_RATIO);
 
-  return sorted.map(({ t: [tx, ty, tz] }, idx) => {
-    const isPlaced = idx < placedN;
-    const k = idx - placedN;
+  return targets.map(([tx, ty, tz]) => {
+    // Scatter start positions in all directions (spherical distribution)
+    const θ = Math.random() * Math.PI * 2;
+    const φ = Math.acos(2 * Math.random() - 1);
+    const dist = R * 2.5 + Math.random() * R * 2;
+    const sx = Math.sin(φ) * Math.cos(θ) * dist;
+    const sy = Math.sin(φ) * Math.sin(θ) * dist;
+    const sz = Math.cos(φ) * dist;
+
     return {
       tx, ty, tz,
-      sx: (Math.random() - 0.5) * cw * 1.6,
-      sy: (Math.random() - 0.5) * ch * 1.6,
-      sz: (Math.random() - 0.5) * R * 4,
+      sx, sy, sz,
       x: 0, y: 0, z: 0,
       rx: 0, ry: 0,
       r: 2.5 + Math.random() * 3.5,
-      t0: isPlaced ? -99999 : FIRST_ARRIVE + k * ARRIVE_INTERVAL,
-      dur: isPlaced ? 1 : ARRIVE_DUR_MIN + Math.random() * (ARRIVE_DUR_MAX - ARRIVE_DUR_MIN),
+      t0: FIRST_ARRIVE + Math.random() * 15, // all start near the same time with slight stagger
+      dur: ARRIVE_DUR_MIN + Math.random() * (ARRIVE_DUR_MAX - ARRIVE_DUR_MIN),
     };
   });
 }
 
-function easeOut(t: number) { return 1 - (1 - t) ** 3; }
+function easeOut(t: number) { return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2; } // easeInOutCubic
 
 function rotY(
   x: number, y: number, z: number, ry: number,

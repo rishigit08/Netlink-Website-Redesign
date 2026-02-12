@@ -96,8 +96,8 @@ export default function Hero() {
         <div className="mx-auto grid max-w-[1320px] grid-cols-1 items-center gap-10 px-6 md:px-10 lg:grid-cols-12 lg:gap-12 lg:px-16">
           {/* Left column — Copy + CTAs (5 of 12 cols) */}
           <div className="text-center lg:col-span-5 lg:text-left">
-            <h1 className="max-w-[18ch] text-3xl font-bold leading-[1.08] tracking-tight text-white sm:text-4xl lg:text-5xl xl:text-6xl">
-              Engineering AI-first Enterprises
+            <h1 className="text-[1.65rem] font-bold leading-[1.08] tracking-tight text-white sm:text-[2rem] lg:text-[2.5rem] xl:text-[3rem]">
+              Engineering AI-first<br />Enterprises
             </h1>
 
             <p className="mt-6 max-w-md text-lg leading-relaxed text-slate-400 sm:text-xl">
