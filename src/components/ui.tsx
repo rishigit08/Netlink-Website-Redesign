@@ -64,10 +64,10 @@ interface PillProps {
 
 export function Pill({ label, variant = "default" }: PillProps) {
   const base =
-    "inline-flex items-center rounded-[10px] px-3 py-1 text-xs font-medium";
+    "inline-flex items-center rounded-lg px-3 py-1 text-xs font-medium";
   const variants = {
     default: "bg-slate-100 text-slate-600",
-    accent: "bg-blue-50 text-blue-600",
+    accent: "bg-blue-600/70 text-white",
   };
   return <span className={`${base} ${variants[variant]}`}>{label}</span>;
 }
@@ -218,14 +218,13 @@ function getCaseIllustration(tags: string[]) {
 interface CaseStudyCardProps {
   client: string;
   title: string;
-  summary: string;
+  summary?: string;
   tags: string[];
 }
 
 export function CaseStudyCard({
   client,
   title,
-  summary,
   tags,
 }: CaseStudyCardProps) {
   const illust = getCaseIllustration(tags);
@@ -234,56 +233,34 @@ export function CaseStudyCard({
     <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-200/50">
       {/* Illustration header */}
       {illust.image ? (
-        <div className="h-44 overflow-hidden">
+        <div className="relative h-44 overflow-hidden">
           <img src={illust.image} alt="" className="h-full w-full object-cover" />
+          {/* Client pill overlay */}
+          <span className="absolute bottom-4 left-4 inline-flex w-fit items-center rounded-full border border-slate-200 bg-white/95 px-3 py-1 text-xs font-semibold tracking-wide text-slate-600 uppercase shadow-sm backdrop-blur-sm">
+            {client}
+          </span>
         </div>
       ) : (
-        <div className={`flex h-44 items-center justify-center bg-gradient-to-br ${illust.bg}`}>
+        <div className={`relative flex h-44 items-center justify-center bg-gradient-to-br ${illust.bg}`}>
           {illust.icon}
+          {/* Client pill overlay */}
+          <span className="absolute bottom-4 left-4 inline-flex w-fit items-center rounded-full border border-slate-200 bg-white/95 px-3 py-1 text-xs font-semibold tracking-wide text-slate-600 uppercase shadow-sm backdrop-blur-sm">
+            {client}
+          </span>
         </div>
       )}
 
-      <div className="flex flex-1 flex-col p-6 sm:p-8">
-        {/* Client pill */}
-        <span className="mb-4 inline-flex w-fit items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold tracking-wide text-slate-600 uppercase">
-          {client}
-        </span>
-
-        <h3 className="text-lg font-semibold leading-snug text-slate-900 sm:text-xl">
-          {title}
-        </h3>
-
-        <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-500">
-          {summary}
-        </p>
-
+      <div className="flex flex-1 flex-col bg-slate-50 p-4">
         {/* Tags */}
-        <div className="mt-5 flex flex-wrap gap-2">
+        <div className="mb-4 flex flex-wrap gap-2">
           {tags.map((tag) => (
             <Pill key={tag} label={tag} variant="accent" />
           ))}
         </div>
 
-        {/* CTA */}
-        <a
-          href="#"
-          className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700"
-        >
-          Read case study
-          <svg
-            className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M13 7l5 5m0 0l-5 5m5-5H6"
-            />
-          </svg>
-        </a>
+        <h3 className="text-sm font-semibold leading-snug text-slate-900 sm:text-base">
+          {title}
+        </h3>
       </div>
     </article>
   );

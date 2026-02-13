@@ -134,17 +134,18 @@ export default function IndustryMapping() {
     if (!activeIndustry || activeIndustry.comingSoon) return [];
 
     const connections: Array<{ from: string; to: string; index: number }> = [];
-    let connectionIndex = 0;
-
-    activeIndustry.valueFunctions.forEach((vf) => {
-      const connectedSolutions = activeIndustry.mapping[vf.id] || [];
-      connectedSolutions.forEach((solutionId) => {
-        connections.push({
-          from: vf.id,
-          to: solutionId,
-          index: connectionIndex,
-        });
-        connectionIndex++;
+    
+    // Connections from each value function to AI core
+    activeIndustry.valueFunctions.forEach((vf, idx) => {
+      connections.push({ from: vf.id, to: 'core', index: idx });
+    });
+    
+    // Connections from AI core to solutions
+    activeIndustry.solutions.forEach((sol, idx) => {
+      connections.push({
+        from: 'core',
+        to: sol.id,
+        index: activeIndustry.valueFunctions.length + idx,
       });
     });
 
@@ -227,59 +228,91 @@ export default function IndustryMapping() {
 
               {/* Render all connections */}
               {allConnections.map(({ from, to, index }) => {
-                const fromPos = cardPositions.valueFunctions[from];
-                const toPos = cardPositions.solutions[to];
                 const corePos = cardPositions.aiCore;
-
-                if (!fromPos || !toPos) return null;
-
-                const path = generatePath(fromPos, toPos, corePos);
-
-                return (
-                  <path
-                    key={`${from}-${to}-${index}`}
-                    d={path}
-                    fill="none"
-                    stroke="url(#connector-gradient)"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    className="connector-path"
-                    style={{
-                      strokeDasharray: "6 3",
-                      animationDelay: `${index * 0.1}s`,
-                    }}
-                  />
-                );
+                
+                if (to === 'core') {
+                  // Value function to AI core
+                  const fromPos = cardPositions.valueFunctions[from];
+                  if (!fromPos || !corePos) return null;
+                  
+                  const path = `M ${fromPos.x} ${fromPos.y} L ${corePos.x} ${corePos.y}`;
+                  
+                  return (
+                    <path
+                      key={`${from}-${to}-${index}`}
+                      d={path}
+                      fill="none"
+                      stroke="url(#connector-gradient)"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      className="connector-path"
+                      style={{
+                        strokeDasharray: "6 3",
+                        animationDelay: `${index * 0.1}s`,
+                      }}
+                    />
+                  );
+                } else if (from === 'core') {
+                  // AI core to solution
+                  const toPos = cardPositions.solutions[to];
+                  if (!corePos || !toPos) return null;
+                  
+                  const path = `M ${corePos.x} ${corePos.y} L ${toPos.x} ${toPos.y}`;
+                  
+                  return (
+                    <path
+                      key={`${from}-${to}-${index}`}
+                      d={path}
+                      fill="none"
+                      stroke="url(#connector-gradient)"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      className="connector-path"
+                      style={{
+                        strokeDasharray: "6 3",
+                        animationDelay: `${index * 0.1}s`,
+                      }}
+                    />
+                  );
+                }
+                return null;
               })}
             </svg>
 
             {/* Three-column Grid */}
             <div className="relative grid grid-cols-[1fr_auto_1fr] gap-12" style={{ zIndex: 2 }}>
-              {/* Left Column: Value Functions */}
-              <div className="flex flex-col justify-center gap-6">
-                {activeIndustry.valueFunctions.map((vf, idx) => (
-                  <div
-                    key={vf.id}
-                    ref={(el) => {
-                      valueFunctionRefs.current[vf.id] = el;
-                    }}
-                    className="group relative"
-                    style={{
-                      opacity: 0,
-                      animation: `fade-in-up 0.5s ease-out ${idx * 0.1}s forwards`,
-                    }}
-                  >
-                    {/* Card */}
-                    <div className="rounded-xl border border-slate-200 bg-white px-4 py-3.5 shadow-sm transition-all duration-300 group-hover:border-blue-200 group-hover:shadow-md">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-normal text-slate-700 transition-colors group-hover:text-slate-900">
-                          {vf.label}
-                        </span>
-                        <span className="text-xs font-medium text-slate-400">{String(idx + 1).padStart(2, "0")}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+              {/* Left Column: Value Functions Card */}
+              {/* Left Column: Value Functions List with Connector Line */}
+              <div 
+                ref={(el) => {
+                  if (el && activeIndustry && activeIndustry.valueFunctions.length > 0) {
+                    valueFunctionRefs.current['container'] = el;
+                  }
+                }}
+                className="flex items-center justify-end"
+                style={{
+                  opacity: 0,
+                  animation: `fade-in-up 0.5s ease-out 0.1s forwards`,
+                }}
+              >
+                <div className="relative w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-md">
+                  {/* Vertical connector line on right edge */}
+                  <div className="absolute right-0 top-1/2 h-3/4 w-px -translate-y-1/2 bg-gradient-to-b from-transparent via-blue-400 to-transparent opacity-40" />
+                  
+                  <ul className="space-y-4">
+                    {activeIndustry.valueFunctions.map((vf, idx) => (
+                      <li
+                        key={vf.id}
+                        ref={(el) => {
+                          valueFunctionRefs.current[vf.id] = el;
+                        }}
+                        className="relative text-sm font-normal text-slate-700"
+                      >
+                        {vf.label}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
 
               {/* Center: AI Core with pulsing effect */}
@@ -311,7 +344,7 @@ export default function IndustryMapping() {
               </div>
 
               {/* Right Column: Solutions */}
-              <div className="flex flex-col justify-center gap-6">
+              <div className="flex flex-col justify-center gap-4">
                 {activeIndustry.solutions.map((solution, idx) => (
                   <div
                     key={solution.id}
@@ -325,10 +358,8 @@ export default function IndustryMapping() {
                     }}
                   >
                     {/* Card */}
-                    <div className="rounded-xl border-2 border-blue-300 bg-white px-4 py-3.5 shadow-sm transition-all duration-300 group-hover:border-blue-400 group-hover:shadow-md">
-                      <span className="text-sm font-medium text-slate-700 transition-colors group-hover:text-slate-900">
-                        {solution.label}
-                      </span>
+                    <div className="rounded-full border border-blue-300 bg-white px-6 py-3 text-sm font-normal text-slate-700 transition-all duration-300 hover:border-blue-400 hover:text-slate-900">
+                      {solution.label}
                     </div>
                   </div>
                 ))}

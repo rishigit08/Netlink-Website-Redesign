@@ -51,15 +51,27 @@ export interface NavItem {
   label: string;
   href: string;
   hasDropdown?: boolean;
+  dropdownItems?: { label: string; href: string; description?: string }[];
 }
 
 export const navItems: NavItem[] = [
-  { label: "Home", href: "#hero", hasDropdown: false },
-  { label: "Services", href: "#services", hasDropdown: true },
-  { label: "Platform And Products", href: "#industries", hasDropdown: true },
+  { 
+    label: "Services", 
+    href: "#services", 
+    hasDropdown: true,
+    dropdownItems: [
+      { label: "Infrastructure & Cloud", href: "#services-infrastructure", description: "When demand shifts, system is able to absorb AI scale without breaking performance" },
+      { label: "ERP & Core Platforms", href: "#services-erp", description: "Decisions move when intelligence is part of core systems. Netlink embeds it where execution happens." },
+      { label: "Data & Intelligence", href: "#services-data", description: "Data unified across enterprise systems enables intelligence that keeps operations efficient and adaptive." },
+      { label: "Agentic Applications & Workflows", href: "#services-agentic", description: "Enabling faster product scale by embedding intelligence into deeply integrated tools and workflows from the start" },
+      { label: "Automation & Orchestration", href: "#services-automation", description: "Netlink builds context-aware automation that adapts as conditions change" },
+      { label: "Security & Governance", href: "#services-security", description: "Security-driven governance to keep intelligent systems scalable and safe" },
+    ]
+  },
+  { label: "Industries", href: "#industries", hasDropdown: true },
   { label: "Partnerships", href: "#connected-enterprise", hasDropdown: true },
   { label: "About Us", href: "#philosophy", hasDropdown: true },
-  { label: "Careers", href: "#", hasDropdown: true },
+  { label: "Careers", href: "#careers", hasDropdown: true },
 ];
 
 // ============================================================
@@ -337,12 +349,12 @@ export const footerColumns: FooterColumnItem[] = [
   {
     title: "Services",
     links: [
-      { label: "Decision Intelligence", href: "#services" },
-      { label: "Product Engineering", href: "#services" },
-      { label: "ERP & Platforms", href: "#services" },
-      { label: "Automation", href: "#services" },
-      { label: "Cloud & Infrastructure", href: "#services" },
-      { label: "Governance", href: "#services" },
+      { label: "Infrastructure & Cloud", href: "#services-infrastructure" },
+      { label: "ERP & Core Platforms", href: "#services-erp" },
+      { label: "Data & Intelligence", href: "#services-data" },
+      { label: "Agentic Applications & Workflows", href: "#services-agentic" },
+      { label: "Automation & Orchestration", href: "#services-automation" },
+      { label: "Security & Governance", href: "#services-security" },
     ],
   },
   {
