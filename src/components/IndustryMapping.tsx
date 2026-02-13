@@ -23,8 +23,8 @@ export default function IndustryMapping() {
   });
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const valueFunctionRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const solutionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const valueFunctionRefs = useRef<Record<string, HTMLElement | null>>({});
+  const solutionRefs = useRef<Record<string, HTMLElement | null>>({});
   const aiCoreRef = useRef<HTMLDivElement | null>(null);
 
   const activeIndustry = industryMappingData.find((ind) => ind.id === activeTab);
